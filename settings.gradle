@@ -1,0 +1,2 @@
+include ':app' , ':flavor_x86'
+rootProject.name='FlavorDemo'
