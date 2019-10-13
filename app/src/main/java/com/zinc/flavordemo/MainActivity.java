@@ -14,7 +14,10 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tvContent = findViewById(R.id.tv_content);
         tvContent.setText("APPLICATION_ID:" + BuildConfig.APPLICATION_ID + "\n" +
-                "VERSION_NAME:" + BuildConfig.VERSION_NAME + "\n" + "VERSION_CODE:" + BuildConfig.VERSION_CODE);
+                "VERSION_NAME:" + BuildConfig.VERSION_NAME + "\n" +
+                "VERSION_CODE:" + BuildConfig.VERSION_CODE + "\n" +
+                "LogicUtils:" + LogicUtils.calculate(1, 2));
+
 
     }
 }
