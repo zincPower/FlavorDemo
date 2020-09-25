@@ -18,13 +18,16 @@ android {
             matchingFallbacks = ['pro']
             missingDimensionStrategy 'version', 'v1'
             ext {
-                API_HOST = [stage: "https://sit-api-report.lepenwang.com/", dev: "http://dev-gam-api.silkrode.com.tw/", prod: "https://api.xiangpeiyao.com/"]
+                API_HOST = [stage: "https://sit-api-report.x86lepenwang.com/", dev: "http://dev-gam-api.x86.com.tw/", prod: "https://api.x86.com/"]
             }
         }
 
         x86_64 {
             dimension 'abi'
             applicationId 'com.zinc.bear64'
+            ext {
+                API_HOST = [stage: "https://sit-api-report.x86_64lepenwang.com/", dev: "http://dev-gam-api.x86_64.com.tw/", prod: "https://api.x86_64.com/"]
+            }
         }
 
         armV7 {
@@ -42,13 +45,28 @@ android {
             buildConfigField('String', 'name', '"JiangPengYong"')
             buildConfigField('int', 'age', '26')
             ext {
-                API_HOST = [stage: "https://sit-api-report.lepenwang.com/", dev: "http://dev-gam-api.silkrode.com.tw/", prod: "https://api.xiangpeiyao.com/"]
+                API_HOST = [stage: "https://sit-api-report.armV7lepenwang.com/", dev: "http://dev-gam-api.armV7.com.tw/", prod: "https://api.armV7.com/"]
             }
         }
 
         arm64_v8a {
             dimension 'abi'
             applicationId 'com.zinc.shark.arm64'
+            ext {
+                API_HOST = [stage: "https://sit-api-report.arm64_v8alepenwang.com/", dev: "http://dev-gam-api.arm64_v8a.com.tw/", prod: "https://api.arm64_v8a.com/"]
+            }
+        }
+    }
+
+    productFlavors.all { flavor ->
+//        println "ProductFlavors Show flavor name "+flavor.name
+        if (flavor.name.equals("arm64_v8a")){
+            flavor.applicationIdSuffix "." + flavor.name
+            flavor.manifestPlaceholders = [
+                    hostName: "www.arm64_v8a.com",
+                    logo    : "@drawable/logo",
+                    appName : "shark_arm64_v8a",
+            ]
         }
     }
 }
