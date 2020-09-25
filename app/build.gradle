@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply from: './config_buildtypes.gradle'
 apply from: './config_product_flavors.gradle'
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -8,8 +10,8 @@ android {
         applicationId "com.zinc.com.zinc.flavordemo"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode version.versionCode.toInteger()
+        versionName version.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
