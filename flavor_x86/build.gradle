@@ -45,3 +45,22 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
 }
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("") f
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}

@@ -31,3 +31,22 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 }
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("") f
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
