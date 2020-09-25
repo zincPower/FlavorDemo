@@ -41,6 +41,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+// TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
 }
 
 dependencies {
@@ -49,8 +54,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
 }
+
 //apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/install.gradle'
 File f = this.file('bintray.properties')
