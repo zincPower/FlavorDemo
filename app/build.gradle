@@ -31,6 +31,14 @@ android {
             buildConfigField('int', 'age', '26')
             matchingFallbacks = ['pro']
             missingDimensionStrategy 'version', 'v1'
+            ext {
+                API_HOST = [stage: "https://sit-api-report.lepenwang.com/", dev: "http://dev-gam-api.silkrode.com.tw/", prod: "https://api.xiangpeiyao.com/"]
+            }
+        }
+
+        x86_64 {
+            dimension 'abi'
+            applicationId 'com.zinc.bear64'
         }
 
         armV7 {
@@ -47,6 +55,14 @@ android {
             versionName '1.6.66'
             buildConfigField('String', 'name', '"JiangPengYong"')
             buildConfigField('int', 'age', '26')
+            ext {
+                API_HOST = [stage: "https://sit-api-report.lepenwang.com/", dev: "http://dev-gam-api.silkrode.com.tw/", prod: "https://api.xiangpeiyao.com/"]
+            }
+        }
+
+        arm64_v8a {
+            dimension 'abi'
+            applicationId 'com.zinc.shark.arm64'
         }
     }
 }
