@@ -42,6 +42,17 @@ android {
             outputFileName = "${flavorName}${env}_demo_v${versionName}.apk"
         }
     }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/aidl']
+        }
+        arm64_v8a {
+            java.srcDirs = [ 'src/main/java','../flavor_x86/src/main/java']
+        }
+    }
 }
 
 dependencies {
