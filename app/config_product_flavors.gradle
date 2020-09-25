@@ -21,6 +21,10 @@ android {
             ext {
                 API_HOST = [stage: "https://sit-api-report.x86lepenwang.com/", dev: "http://dev-gam-api.x86.com.tw/", prod: "https://api.x86.com/"]
             }
+            dependencies.implementation 'org.cks.demo.res:res_x86:1.11.13' //FIXME fail use dependencies remote module   : logo.png not change !!!
+//            dependencies {
+//                implementation 'org.cks.demo.res:res_x86:1.11.13'
+//            }
         }
 
         x86_64 {
