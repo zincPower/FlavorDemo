@@ -72,6 +72,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        prod_debug.initWith(buildTypes.debug)
+        dev_debug.initWith(buildTypes.debug)
+
+        prod_release.initWith(buildTypes.release)
+        dev_release.initWith(buildTypes.release)
+
+        prod_debug {}
+        prod_release {}
+
+        stage_debug {
+            initWith(buildTypes.debug)
+        }
+        stage_release {
+            initWith(buildTypes.release)
+        }
+
+        dev_debug {}
+        dev_release {}
     }
 
     flavorDimensions('abi')
