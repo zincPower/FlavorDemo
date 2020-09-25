@@ -1,0 +1,54 @@
+android {
+    flavorDimensions('abi')
+
+    productFlavors {
+        x86 {
+            dimension 'abi'
+            applicationId 'com.zinc.bear'
+            manifestPlaceholders = [
+                    hostName: "www.x86.com",
+                    logo    : "@drawable/logo",
+                    appName : "bear",
+            ]
+            signingConfig signingConfigs.jiangpengyong
+            versionCode 1898
+            versionName '1.8.98'
+            buildConfigField('String', 'name', '"XiaoPenYou"')
+            buildConfigField('int', 'age', '26')
+            matchingFallbacks = ['pro']
+            missingDimensionStrategy 'version', 'v1'
+            ext {
+                API_HOST = [stage: "https://sit-api-report.lepenwang.com/", dev: "http://dev-gam-api.silkrode.com.tw/", prod: "https://api.xiangpeiyao.com/"]
+            }
+        }
+
+        x86_64 {
+            dimension 'abi'
+            applicationId 'com.zinc.bear64'
+        }
+
+        armV7 {
+            dimension 'abi'
+            applicationId 'com.zinc.shark'
+            manifestPlaceholders = [
+                    hostName: "www.armv7.com",
+                    logo    : "@drawable/logo",
+                    appName : "shark",
+            ]
+
+            signingConfig signingConfigs.xiaopenyou
+            versionCode 1666
+            versionName '1.6.66'
+            buildConfigField('String', 'name', '"JiangPengYong"')
+            buildConfigField('int', 'age', '26')
+            ext {
+                API_HOST = [stage: "https://sit-api-report.lepenwang.com/", dev: "http://dev-gam-api.silkrode.com.tw/", prod: "https://api.xiangpeiyao.com/"]
+            }
+        }
+
+        arm64_v8a {
+            dimension 'abi'
+            applicationId 'com.zinc.shark.arm64'
+        }
+    }
+}
