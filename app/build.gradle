@@ -93,6 +93,20 @@ android {
         dev_release {}
     }
 
+    variantFilter { variant ->
+        def flavorName = variant.name
+        def buildTypename = variant.buildType.name.toString()
+        println "variantFilter Show flavor is " + flavorName+" with buildTypename : "+ buildTypename
+//         println "variantFilter Show buildTypename !!  " + buildTypename//
+        def isDev = buildTypename.contains("dev")
+        //below ignore release or debug buildtype
+        if (buildTypename.equals('release') || buildTypename.equals('debug')) {
+//            println "Show match  buildtype "+variant.buildType.name
+            println "variantFilter flavor : " + flavorName+" with default buildType : "+ buildTypename+" ignore"
+            variant.setIgnore(true)
+        }
+    }
+
     flavorDimensions('abi')
 
     productFlavors {
