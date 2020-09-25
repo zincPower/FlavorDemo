@@ -52,9 +52,24 @@ android {
     }
 
     buildTypes {
+        debug {
+            matchingFallbacks = ['release', 'debug']
+            zipAlignEnabled false
+            minifyEnabled false
+            debuggable true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
         release {
 //            signingConfig signingConfigs.gradleStudy
+            matchingFallbacks = ['release', 'debug']
+            zipAlignEnabled false
             minifyEnabled false
+            shrinkResources false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
