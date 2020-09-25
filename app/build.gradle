@@ -14,6 +14,34 @@ android {
         versionName version.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    //Ref :  https://stackoverflow.com/questions/31461267/using-a-different-manifestplaceholder-for-each-build-variant
+    applicationVariants.all { variant ->
+        def flavor = variant.productFlavors[0]
+        def full_buildTypename = variant.buildType.name.toString()
+        def flavorName = variant.flavorName
+        def buildtype = full_buildTypename
+        def env = ""
+        if (full_buildTypename.contains("_")) {
+            buildtype = full_buildTypename.split("_")[0]
+            if (full_buildTypename.contains("prod")) {
+                env = ""
+            } else {
+                env = "_" + full_buildTypename.split("_")[0]
+            }
+        }
+        variant.buildConfigField "String", "ENV", "\"${env}\""
+        def flavor_version = this.ext.default_version(flavorName)
+        println "Show " + flavorName + " current flavor_version versionName " + flavor_version.versionName
+        println "Show " + flavorName + " current _version versionCode :   " + flavor_version.versionCode
+        variant.buildConfigField "String", "API_HOST_URL", "\"${flavor.ext.API_HOST[buildtype]}\""
+        variant.outputs.all {
+//            ext.output_apk_folder=variant.getPackageApplicationProvider().get().outputs.files[2].relativize(this.project.rootDir.toPath())
+            ext.output_apk_folder = variant.getPackageApplicationProvider().get().outputs.files[2]
+            println "output_apk_folder :  " + ext.output_apk_folder
+            outputFileName = "${flavorName}${env}_demo_v${versionName}.apk"
+        }
+    }
 }
 
 dependencies {
