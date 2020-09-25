@@ -1,2 +1,6 @@
+include ':res_arm64'
+include ':res_armv7'
+include ':res_x86_64'
+include ':res_x86'
 include ':app' , ':flavor_x86'
 rootProject.name='FlavorDemo'
