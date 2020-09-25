@@ -28,6 +28,9 @@ android {
             ext {
                 API_HOST = [stage: "https://sit-api-report.x86_64lepenwang.com/", dev: "http://dev-gam-api.x86_64.com.tw/", prod: "https://api.x86_64.com/"]
             }
+            dependencies {
+                implementation project(':res_x86')
+            }
         }
 
         armV7 {
@@ -47,6 +50,9 @@ android {
             ext {
                 API_HOST = [stage: "https://sit-api-report.armV7lepenwang.com/", dev: "http://dev-gam-api.armV7.com.tw/", prod: "https://api.armV7.com/"]
             }
+            dependencies {
+                implementation project(':res_armv7')
+            }
         }
 
         arm64_v8a {
@@ -54,6 +60,9 @@ android {
             applicationId 'com.zinc.shark.arm64'
             ext {
                 API_HOST = [stage: "https://sit-api-report.arm64_v8alepenwang.com/", dev: "http://dev-gam-api.arm64_v8a.com.tw/", prod: "https://api.arm64_v8a.com/"]
+            }
+            dependencies {
+                implementation project(':res_arm64')
             }
         }
     }
@@ -67,6 +76,11 @@ android {
                     logo    : "@drawable/logo",
                     appName : "shark_arm64_v8a",
             ]
+        }
+        if (flavor.name.equals("x86")){
+            dependencies {
+                implementation project(":res_"+"$flavor.name")
+            }
         }
     }
 }
