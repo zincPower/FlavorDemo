@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: './config_buildtypes.gradle'
-
+apply from: './config_product_flavors.gradle'
 android {
     compileSdkVersion 28
     buildToolsVersion "30.0.2"
