@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
 apply from: './config_buildtypes.gradle'
 apply from: './config_product_flavors.gradle'
-apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+//TODO  the below gradle can not get in china
+//apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+//TODO  in china use local gradle
+apply from: '../version.gradle'
 def version = this.ext.default_version()
 android {
     compileSdkVersion 30

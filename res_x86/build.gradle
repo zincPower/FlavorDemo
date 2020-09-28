@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
-apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+//TODO  the below gradle can not get in china
+//apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+//TODO  in china use local gradle
+apply from: '../version.gradle'
 def version = this.ext.default_version()
 ext {
     //FIXME the below three  modify with project type by yourself
