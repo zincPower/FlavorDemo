@@ -1,0 +1,159 @@
+ext {
+    default_version = this.&readVersionWithFlavor
+    increaseVersion = this.&increaseVersionWithFlavor
+    increaseHotfixVersion = this.&increaseHotfixVersionWithFlavor
+    decreaseVersion = this.&decreaseVersionWithFlavor
+    currentVersion = this.&showCurrentVersionWithFlavor
+    syncversionandtag = this.&syncVersionAndTagWithFlavor
+}
+
+class Version {
+    def versionCode
+    def versionName
+}
+
+Version  readVersionWithFlavor(String flavor) {
+    def version_properties_path = 'version.properties'
+    if (flavor ==null || flavor.equals("")){
+    }else {
+        version_properties_path = "./src/"+flavor+"/version.properties"
+    }
+    if (version_properties_path == null || version_properties_path.equals("")){
+        version_properties_path='version.properties'
+    }
+    Properties defaultVersionProps = new Properties()
+    def pfile = file(version_properties_path)
+    if (!pfile.exists()) {
+        pfile = file('version.properties')
+    }
+    defaultVersionProps.load(new FileInputStream(pfile))
+    def defaultBuildVersionCode = defaultVersionProps['VERSION_CODE']
+    def defaultBuildVersionName = defaultVersionProps['VERSION_NAME_PREFIX'] + "." + defaultVersionProps['VERSION_NAME_BUILD']
+    return new Version(versionCode: defaultBuildVersionCode, versionName: defaultBuildVersionName)
+}
+
+def increaseVersionWithFlavor(String flavor) {
+    if (flavor ==null || flavor.equals("")){
+        increaseVersionWithPath('version.properties')
+    }else {
+        def path = "./src/"+flavor+"/version.properties"
+        increaseVersionWithPath(path)
+    }
+}
+
+def increaseVersionWithPath(String version_properties_path) {
+    Properties versionProps = new Properties()
+    def pfile = file(version_properties_path)
+    if (!pfile.exists()) {
+        pfile = file('version.properties')
+    }
+    versionProps.load(new FileInputStream(pfile))
+    def buildVersionName = versionProps['VERSION_NAME_PREFIX'] + "." + versionProps['VERSION_NAME_BUILD']
+    println "Show "+this.project.name +" current : $buildVersionName"
+    def hotfix = versionProps['VERSION_NAME_HOTFIX'].toInteger()
+    def nextCode = versionProps['VERSION_CODE'].toInteger() - hotfix + 10
+    versionProps['VERSION_CODE'] = nextCode.toString()
+    def nextBuild = versionProps['VERSION_NAME_BUILD'].toInteger() + 1
+    versionProps['VERSION_NAME_BUILD'] = nextBuild.toString()
+    hotfix = 0
+    versionProps['VERSION_NAME_HOTFIX'] = hotfix.toString()
+    versionProps.store(pfile.newWriter(), null)
+    buildVersionName = versionProps['VERSION_NAME_PREFIX'] + "." + versionProps['VERSION_NAME_BUILD']
+    println "Increase $buildVersionName"
+}
+
+def increaseHotfixVersionWithFlavor(String flavor) {
+    if (flavor ==null || flavor.equals("")){
+        increaseHotfixVersionWithPath('version.properties')
+    }else {
+        def path = "./src/"+flavor+"/version.properties"
+        increaseHotfixVersionWithPath(path)
+    }
+}
+
+def increaseHotfixVersionWithPath(String version_properties_path) {
+    Properties versionProps = new Properties()
+    def pfile = file(version_properties_path)
+    if (!pfile.exists()) {
+        pfile = file('version.properties')
+    }
+    versionProps.load(new FileInputStream(pfile))
+    def buildVersionName = versionProps['VERSION_NAME_PREFIX'] + "." + versionProps['VERSION_NAME_BUILD']
+    println "Show "+this.project.name +" current : $buildVersionName"
+    def nextCode = versionProps['VERSION_CODE'].toInteger() + 1
+    versionProps['VERSION_CODE'] = nextCode.toString()
+    def hotfix = versionProps['VERSION_NAME_HOTFIX'].toInteger() + 1
+    versionProps['VERSION_NAME_HOTFIX'] = hotfix.toString()
+    versionProps.store(pfile.newWriter(), null)
+    buildVersionName = versionProps['VERSION_NAME_PREFIX'] + "." + versionProps['VERSION_NAME_BUILD'] + "." + versionProps['VERSION_NAME_HOTFIX']
+    println "Increase Hotfix $buildVersionName"
+}
+
+def decreaseVersionWithFlavor(String flavor) {
+    if (flavor ==null || flavor.equals("")){
+        decreaseVersionWithPath('version.properties')
+    }else {
+        def path = "./src/"+flavor+"/version.properties"
+        decreaseVersionWithPath(path)
+    }
+}
+
+def decreaseVersionWithPath(String version_properties_path) {
+    Properties versionProps = new Properties()
+    def pfile = file(version_properties_path)
+    if (!pfile.exists()) {
+        pfile = file('version.properties')
+    }
+    versionProps.load(new FileInputStream(pfile))
+    def preCode = versionProps['VERSION_CODE'].toInteger() - 1
+    versionProps['VERSION_CODE'] = preCode.toString()
+    def preBuild = versionProps['VERSION_NAME_BUILD'].toInteger() - 1
+    versionProps['VERSION_NAME_BUILD'] = preBuild.toString()
+    versionProps.store(pfile.newWriter(), null)
+    def buildVersionName = versionProps['VERSION_NAME_PREFIX'] + "." + versionProps['VERSION_NAME_BUILD']
+    println "Decrease $buildVersionName"
+}
+
+def showCurrentVersionWithFlavor(String flavor) {
+    def path = 'version.properties'
+    if (flavor ==null || flavor.equals("")){
+    }else {
+        path = "./src/"+flavor+"/version.properties"
+    }
+    Properties versionProps = new Properties()
+    def pfile = file(path)
+    versionProps.load(new FileInputStream(pfile))
+    def buildVersionName = versionProps['VERSION_NAME_PREFIX'] + "." + versionProps['VERSION_NAME_BUILD']
+    println this.project.name +" current : $buildVersionName"
+}
+
+def syncVersionAndTagWithFlavor(String flavor, int prefixn, int apifeaturen,  int buildn,int hotfixn) {
+    if (flavor ==null || flavor.equals("")){
+        syncVersionAndTagWithPath('version.properties',prefixn,apifeaturen,buildn,hotfixn)
+    }else {
+        def path = "./src/"+flavor+"/version.properties"
+        syncVersionAndTagWithPath(path,prefixn,apifeaturen,buildn,hotfixn)
+    }
+}
+
+def syncVersionAndTagWithPath(String version_properties_path, int prefixn, int apifeaturen,  int buildn,int hotfixn) {
+    Properties versionProps = new Properties()
+    if (version_properties_path == null || version_properties_path.equals("")) {
+        version_properties_path = 'version.properties'
+    }
+    def pfile = file(version_properties_path)
+    if (!pfile.exists()) {
+        pfile = file('version.properties')
+    }
+    versionProps.load(new FileInputStream(pfile))
+    println "Show prefix " + (prefixn * 10000000)
+    println "Show api_feature  " + (apifeaturen * 10000)
+    println "Show build " + (buildn * 10)
+    println "Show hotfix " + hotfixn
+    println "Show VERSION_CODE " + ((prefixn * 10000000)+(apifeaturen * 10000)+(buildn * 10)+hotfixn)
+    versionProps['VERSION_NAME_PREFIX'] = prefixn.toString()+"."+apifeaturen.toString()
+    versionProps['VERSION_NAME_HOTFIX'] = hotfixn.toString()
+    versionProps['VERSION_NAME_BUILD'] = buildn.toString()
+    versionProps['VERSION_CODE'] = ((prefixn * 10000000)+(apifeaturen * 10000)+(buildn * 10)+hotfixn).toString()
+    versionProps.store(pfile.newWriter(), null)
+}

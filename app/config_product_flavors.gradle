@@ -1,0 +1,105 @@
+android {
+    flavorDimensions('abi')
+
+    productFlavors {
+        x86 {
+            //TODO  this flavor demo set dependencies at  productFlavors.all
+            dimension 'abi'
+            applicationId 'com.zinc.bear'
+            manifestPlaceholders = [
+                    hostName: "www.x86.com",
+                    logo    : "@drawable/logo",
+                    appName : "x86",
+            ]
+            signingConfig signingConfigs.jiangpengyong
+            versionCode 1898
+            versionName '1.8.98'
+            buildConfigField('String', 'name', '"XiaoPenYou"')
+            buildConfigField('int', 'age', '26')
+            matchingFallbacks = ['pro']
+            missingDimensionStrategy 'version', 'v1'
+            ext {
+                API_HOST = [stage: "https://sit-api-report.x86lepenwang.com/", dev: "http://dev-gam-api.x86.com.tw/", prod: "https://api.x86.com/"]
+            }
+            dependencies.implementation 'org.cks.demo.res:res_x86:1.11.13' //FIXME fail use dependencies remote module   : logo.png not change !!!
+//            dependencies {
+//                implementation 'org.cks.demo.res:res_x86:1.11.13'
+//            }
+        }
+
+        x86_64 {
+            //TODO  this flavor demo et sourceSets at  productFlavors item
+            dimension 'abi'
+            applicationId 'com.zinc.bear64'
+            manifestPlaceholders = [
+                    hostName: "www.x86_64.com",
+                    logo    : "@drawable/logo",
+                    appName : "x86_64",
+            ]
+            sourceSets {
+                x86_64 {
+                    java.srcDirs = [ 'src/main/java','../flavor_x86/src/main/java']
+                }
+            }
+            ext {
+                API_HOST = [stage: "https://sit-api-report.x86_64lepenwang.com/", dev: "http://dev-gam-api.x86_64.com.tw/", prod: "https://api.x86_64.com/"]
+            }
+            dependencies {
+                implementation project(':res_x86_64') //FIXME fail use dependencies local module   : logo.png not change !!!
+            }
+        }
+
+        armV7 {
+            //TODO  this flavor demo set manifestPlaceholders at  productFlavors.all
+            //TODO  this flavor demo set applicationIdSuffix at  productFlavors.all
+            dimension 'abi'
+            applicationId 'com.zinc.shark'
+
+            signingConfig signingConfigs.xiaopenyou
+            versionCode 1666
+            versionName '1.6.66'
+            buildConfigField('String', 'name', '"JiangPengYong"')
+            buildConfigField('int', 'age', '26')
+            ext {
+                API_HOST = [stage: "https://sit-api-report.armV7lepenwang.com/", dev: "http://dev-gam-api.armV7.com.tw/", prod: "https://api.armV7.com/"]
+            }
+            dependencies {
+                implementation project(':res_armv7') //FIXME fail use dependencies local module   : logo.png not change !!!
+            }
+        }
+
+        arm64_v8a {
+            //TODO  this flavor demo set sourceSets at  build.gradle
+            dimension 'abi'
+            applicationId 'com.zinc.shark.arm64'
+            manifestPlaceholders = [
+                    hostName: "www.arm64_v8a.com",
+                    logo    : "@drawable/logo",
+                    appName : "shark_arm64_v8a",
+            ]
+            ext {
+                API_HOST = [stage: "https://sit-api-report.arm64_v8alepenwang.com/", dev: "http://dev-gam-api.arm64_v8a.com.tw/", prod: "https://api.arm64_v8a.com/"]
+            }
+            dependencies {
+                implementation project(':res_arm64') //FIXME fail use dependencies local module   : logo.png not change !!!
+            }
+        }
+    }
+
+    productFlavors.all { flavor ->
+//        println "ProductFlavors Show flavor name "+flavor.name
+        if (flavor.name.equals("armV7")) {
+            flavor.applicationIdSuffix "." + flavor.name
+            flavor.manifestPlaceholders = [
+                    hostName: "www.armv7.com",
+                    logo    : "@drawable/logo",
+                    appName : "armV7",
+            ]
+        }
+        if (flavor.name.equals("x86")) {
+            dependencies {
+                implementation project(":res_" + "$flavor.name")  //FIXME fail use dependencies local module   : logo.png not change !!!
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+// https://developer.android.com/studio/publish/app-signing
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+android {
+    signingConfigs {
+        gradleStudy {
+            keyAlias keystoreProperties['keyAlias1']
+            keyPassword keystoreProperties['keyPassword1']
+            storeFile file(keystoreProperties['storeFile1'])
+            storePassword keystoreProperties['storePassword1']
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        xiaopenyou {
+            keyAlias keystoreProperties['keyAlias2']
+            keyPassword keystoreProperties['keyPassword2']
+            storeFile file(keystoreProperties['storeFile2'])
+            storePassword keystoreProperties['storePassword2']
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        jiangpengyong {
+            keyAlias keystoreProperties['keyAlias3']
+            keyPassword keystoreProperties['keyPassword3']
+            storeFile file(keystoreProperties['storeFile3'])
+            storePassword keystoreProperties['storePassword3']
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        debug {
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+}

@@ -1,15 +1,36 @@
 apply plugin: 'com.android.library'
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
+ext {
+    //FIXME the below three  modify with project type by yourself
+    maven_repo_name = 'Resource'
+    library_versionName = version.versionName
+    library_pom_bintray_GroupId = 'org.cks.demo.res'
+    scmUrl = 'https://github.com/xiangdingquan/Aes'
+    developerid = 'xiangdingquan'
+    developername = 'xdq(xiangdingquan)'
+    developeremail = 'xdq19910120@gmail.com'
+    scmConnectionUrl = 'https://github.com/xiangdingquan/Aes'
+    scmDeveloperConnectionUrl = 'https://github.com/xiangdingquan/Aes.git'
 
+    mavDevelopers = ["Fe": "Federico"]
+    mavSiteUrl = "https://github.com/xiangdingquan/Aes"
+    mavGitUrl = mavSiteUrl + '.git'
+    mavProjectName = this.project.name
+    mavPublishToInternalRepo = true
+    mavRepoInternalUrl = "path/to/internal/repo"
+    mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "an AES decrypt and encrypt for jni !!"
+}
 android {
-    compileSdkVersion 28
-    buildToolsVersion "29.0.1"
-
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 30
+        versionCode version.versionCode.toInteger()
+        versionName version.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -37,7 +58,6 @@ android {
             dimension 'abi'
         }
     }
-
 }
 
 dependencies {
@@ -45,4 +65,31 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
+}
+
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/install.gradle'
+File f = this.file('bintray.properties')
+if (f.exists() && !f.isDirectory()) {
+    assert file(f).exists()
+    apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/bintray.gradle'
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
 }
